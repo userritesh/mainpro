@@ -1,0 +1,40 @@
+<table class="table table-hover" id="view_table">
+    <thead>
+      <tr>
+        <th class="text-center"> Id </th>
+
+        <th>Name</th>
+        <th>Designation</th>
+        <th>Email</th>
+        <th>DOJ</th>
+
+        <th>Action</th>
+
+
+      </tr>
+    </thead>
+    <tbody>
+
+      {% for i in obj1 %}
+
+      <tr>
+        <th scope="row">{{i.id}}</th>
+        <td>{{i.Employee_Name}}</td>
+        <td>{{i.Designation}}</td>
+        <td>{{i.Email}}</td>
+        <td>{{i.DOJ}}</td>
+
+
+
+        <td>
+          <a class="btn btn-outline-primary" href="/edit_details/{{i.id}}"><i class=" fas fa fa-pencil"
+              aria-hidden="true"></i></a>
+          <a type="button" class="btn btn-outline-dark" onclick="delete_employee('{{i.id}}')"><i
+              class=" fas fa-trash"></i></a>
+        </td>
+      </tr>
+
+      {% endfor %}
+
+    </tbody>
+  </table>

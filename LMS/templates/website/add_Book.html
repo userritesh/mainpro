@@ -1,0 +1,292 @@
+
+<!DOCTYPE html>
+{% load static %}
+
+{% include "layout/header.html" %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+  
+  
+</head>  
+
+
+<body style="background-color: #fdfcfc03;">
+ <div class="main-content">
+        <section class="section">
+         
+          <div class="section-body">
+            <div class="row">
+              <div class="col-lg-2" > 
+                 </div>
+				<div class="col-lg-7">
+					<div class="card">
+						<div class="card-body">
+							 <ul class="breadcrumb breadcrumb-style "style="background: #f3f3f3;">
+								<li class="breadcrumb-item">
+								  <h5 class="page-title m-b-0">Add Book Details</h5>
+								</li>
+								<li class="breadcrumb-item">
+								  <a href="/book_master/">
+									<i class="fas fa-home"></i></a>
+								</li>
+								</ul> 
+
+                             <form action="" method="get" id='new_user_form' style="margin: 25 px auto"  ; >
+                                
+                                
+								<label for="name">BookName</label>
+								<input type="text" id="Book" class="form-control"  value="{{book_obj.Book}}" name="Book" tabindex="1"  required autofocus  placeholder="BookName" > <br>
+								
+								<label for="email">Author</label>
+								<input type="email" id="Author" class="form-control" value="{{book_obj.Author}}" name="Author" tabindex="1" placeholder="author"><br>
+
+								<label for="designation">DOP:</label>
+								<input type="date" id="DOP" class="form-control"   value="{{book_obj.DOP|date:'Y-m-d'}}" name="DOP" tabindex="1"  required autofocus   placeholder="YYYY-MM-DD format" > <br>
+								
+                <div class="form-group">
+                  <label>Category</label>
+                                                                    
+                  <select id="category" class="form-control" >
+                  <option value = "" selected hidden >Category</option>
+                                                                          
+                  {% for i in obj %}
+                      <option value = "{{i.category}}" >{{i.category}}</option>
+                  {% endfor %}
+                  </select>
+                                                                      
+                  </div>
+
+
+             <div class="form-group">
+                  <label for="condition">Condition</label>
+                   <select  type="text" id="Condition"  class="form-control" name="condition" placeholder="condition" >
+                
+                      <option value="old">Old</option>
+                      <option value="new">New</option>
+                      <option value="average">Average</option>
+                      
+                    </select>
+            </div>
+                <!-- <label for="Condition">Condition:</label>
+								<input type="text" id="Condition" class="form-control" value="{{book_obj.Condition}}" name="Condition" tabindex="1"  required autofocus  placeholder="Condition"> <br> -->
+
+                <label for="per_day_Price">per_day_Price:</label>
+								<input type="text" id="per_day_Price" class="form-control" value="{{book_obj.per_day_Price}}" name="per_day_Price" tabindex="1"  required autofocus  placeholder="per_day_Price"> <br>
+                
+                {% comment %} <label for="per_hour_Price">per_hour_Price:</label>
+								<input type="text" id="per_hour_Price" class="form-control" value="{{book_obj.per_hour_Price}}" name="per_hour_Price" tabindex="1"  required autofocus  placeholder="per_hour_Price"> <br>
+ {% endcomment %}
+								<input type="hidden" id="book_id" class="form-control" value="{{book_obj.id}}" name="Price" tabindex="1"  required autofocus > <br>
+
+                <div> 
+                  {% if type == "add_book" %}              
+                <center>
+                  <button type="button" type="submit" class="btn btn-success" value="save" onclick="add_book()" >Save </button>
+                </center>
+                {% else %}
+                <center>
+                  <button type="button" type="submit" class="btn btn-success" value="save" onclick="modify_book_details()" >modify </button>
+                </center>
+                {% endif %}
+                </div>
+						
+              </br>
+          <!-- <div> -->
+            <!-- <a href="#" class="txt1"> -->
+              <!-- Add details -->
+            <!-- </a> -->
+              <!-- </div> -->
+
+       </div>
+   </div>
+    
+</div>
+
+
+  </div>
+</div>		
+</body>			 
+<script>
+
+
+$(document).ready(function(){
+$(document).bind('keypress', function(e) {
+if(e.keyCode==13){
+$('#save_button').trigger('click');
+}
+});
+})
+
+function add_book(){
+    var Book=$('#Book').val()
+    var Author=$('#Author').val()
+    var DOP=$('#DOP').val()
+    var Condition=$('#Condition').val()
+    var per_day_Price=$('#per_day_Price').val()
+    var per_hour_Price=$('#per_hour_Price').val()
+
+
+    if(Book == ""){
+		
+      swal("Please Enter Name", {
+        icon: "info",
+        button: "Ok",
+        closeOnClickOutside: false,     
+        }).then(function() {
+          
+      });
+    
+    }
+    
+    
+    else if(Author == ""){
+    
+    swal("Please Enter Email.", {
+        icon: "info",
+        button: "Ok",
+        closeOnClickOutside: false,     
+        }).then(function() {
+          
+      });
+    
+    }
+    else if(DOP == ""){
+    
+    swal("Please Enter Designation.", {
+        icon: "info",
+        button: "Ok",
+        closeOnClickOutside: false,     
+        }).then(function() {
+          
+      });
+    
+    }
+    
+    
+    
+    
+    
+    else if(Condition == ""){
+    
+    swal("Please Enter doj.", {
+        icon: "info",
+        button: "Ok",
+        closeOnClickOutside: false,     
+        }).then(function() {
+          
+      });
+      
+    
+    }
+    
+    else if(per_day_Price == ""){
+    
+    swal("Please Enter doj.", {
+        icon: "info",
+        button: "Ok",
+        closeOnClickOutside: false,     
+        }).then(function() {
+          
+      });
+      
+    
+    }
+    
+    
+    else{
+   
+    
+    console.log(Book)
+    console.log(Author)
+    console.log(DOP)
+    console.log(Condition)
+    console.log(per_day_Price)
+    console.log(per_hour_Price)
+    
+ 
+        
+        $.ajax({
+            method : "POST",
+            url : "/book_detail/",
+            data : {
+              'Book':Book,
+              'Author':Author,
+              'DOP':DOP,
+              'Condition':Condition,
+              'per_day_Price':per_day_Price,
+              'per_hour_Price':per_hour_Price,
+                
+               
+            
+            },
+            success : function(response){
+               
+                if (response == "success"){
+            
+                    alert("Data store")
+ 
+                    location.href = '/book_master/'
+ 
+                }
+                
+                else{
+                
+                    alert("User already exixts")
+                
+                }
+ 
+            
+            }
+ 
+    });
+ }
+}
+
+ </script>
+
+ <script>
+  function modify_book_details()
+  {
+    var Book=$('#Book').val()
+    var Author=$('#Author').val()
+    var DOP=$('#DOP').val()
+    var Condition=$('#Condition').val()
+    var per_day_Price=$('#per_day_Price').val()
+    var per_hour_Price=$('#per_hour_Price').val()
+    var book_id =$("#book_id").val()
+
+
+   
+    $.ajax({
+      method: 'POST',
+      url: '/modify_book_details/',
+      data: {
+        'Book':Book,
+        'Author':Author,
+        'DOP':DOP,
+        'Condition':Condition,
+        'per_day_Price':per_day_Price,
+        'per_hour_Price':per_hour_Price,
+        'book_id': book_id,
+        
+      },
+      success: function (response) {
+        if (response == 'success') {
+          location.href = '/book_master/'
+        }
+        else {
+          alert("error")
+
+        }
+      }
+
+    })
+  }
+
+ 
+ </script>
+</html>
+{% include "layout/footer.html" %}

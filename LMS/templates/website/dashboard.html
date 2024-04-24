@@ -1,0 +1,78 @@
+{% load static %}
+{% include "layout/header.html" %}
+
+<div class="main-content">
+  <section class="section">
+    <div class="section-body">
+      <div class="row">
+        <div class="col-lg-10">
+          <div class="card">
+            <div class="card-body">
+              <ul
+                class="breadcrumb breadcrumb-style"
+                style="background: #f3f3f3"
+              >
+                <li class="breadcrumb-item">
+                  <h5 class="page-title m-b-0 alert alert-info"></h5>
+                </li>
+                <li class="breadcrumb-item">
+                  <a href="/dashboard/"> <i class="fas fa-home"></i></a>
+                </li>
+              </ul>
+              <ul class="nav nav-tabs" id="myTab2" role="tablist">
+              </ul>
+
+              <div class="tab-content tab-bordered" id="myTab3Content">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+<script>
+
+function delete_data(id){
+  console.log(id)
+  swal({
+      title: "Are you sure to delete this user?",
+      text: "",
+      icon:"warning",
+      buttons: true,
+      dangermode: true,
+  })
+
+  
+  .then((willDelete) => {
+    if(willDelete) {
+      $.ajax({
+        method:"POST",
+        url:"/Delete_data/",
+        data: {
+          "id":id
+        },
+
+        success: function(response) {
+          if (response== "success") {
+              swal ("data has been deleted", {
+              icon: 'success',
+              button: "ok",
+              closeOnClickOutside: false,
+
+              }) .then (function() {
+                   location.reload();
+              });
+          }
+        }
+      });
+    }
+  });
+}
+  
+</script>
+
+{% include "layout/footer.html" %}

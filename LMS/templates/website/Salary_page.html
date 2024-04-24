@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+{% load static %}
+
+{% include "layout/header.html" %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body style="background-color: #fdfcfc03;">
+  <div class="main-content">
+    <section class="section">
+
+
+      <div class="section-body">
+        <div class="row">
+          <div class="col-lg-2">
+          </div>
+          <div class="col-lg-7">
+            <div class="card">
+              <div class="card-body">
+                <ul class="breadcrumb breadcrumb-style " style="background: #f3f3f3;">
+                  <li class="breadcrumb-item">
+                    <h5 class="page-title m-b-0">Add New Request</h5>
+                  </li>
+                  <li class="breadcrumb-item">
+                    <a href="/daily_visitors/">
+                      <i class="fas fa-home"></i></a>
+                  </li>
+                </ul>
+
+                <form action="" method="get" id='new_user_form' style="margin: 25 px auto" ;>
+
+
+
+
+                  <div class="form-group">
+                    
+                    <label>Employee Name</label>
+                    <select id="Employee_Name" class="form-control select2" onchange="Designation_select()">
+                      {% for i in obj2 %}
+                      {% if i.Employee_Name == obj_emp.Employee_Name.Employee_Name %}
+                      <option value="{{i.id}}" selected>{{i.Employee_Name}}</option>
+                      {% else %}
+                      <option value="{{i.id}}">{{i.Employee_Name}}</option>
+                      {% endif %}
+                      {% endfor %}
+                    </select>
+                  </select>
+
+
+                     <!-- <input type="text" id="Employee_Name" class="form-control" value="{{daily_obj.id}}" name="Employee_Name"
+                    tabindex="1" required autofocus> <br> -->
+
+
+                  </div>
+
+                  <label for="destination"> Destination </label>
+                  <input type="text" id="destination" class="form-control" value="{{obj_emp.destination}}"
+                    name="destination" tabindex="1" placeholder="destination"><br>
+
+                    <label for="yearly_package">Yearly package</label>
+                    <input type="number" id="yearly_package" class="form-control" oninput="calculate_monthly_salary()" value="{{ obj_emp.yearly_package }}" name="yearly_package" tabindex="1" placeholder="yearly package"><br>
+                    
+                  <label for="monthly_salary">Monthly salary:</label>
+                  <input type="text" id="monthly_salary" class="form-control" value="{{obj_emp.monthly_salary}}" name="monthly_salary"
+                    tabindex="1" required autofocuf
+                  <input type="hidden" id="emp_id" class="form-control" value="{{obj_emp.id}}" name="Price"
+                    tabindex="1" required autofocus> <br>
+
+
+                  </div>
+
+                  <div>
+                    {% if type == "add_emp" %}
+                    <center>
+                      <button type="button" type="submit" class="btn btn-success" value="save"
+                        onclick="add_Emp_detail()">Save </button>
+                    </center>
+
+                    {% else %}
+                    <center>
+                      <button type="button" type="submit" class="btn btn-success" value="save"
+                        onclick="modify_emp_detail()">modify </button>
+                    </center>
+                    {% endif %}
+                  </div>
+
+
+
+                  </br>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+    </section>
+
+  </div>
+  </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+
+$('.select2').select2({
+  placeholder: 'Select an option'
+});
+
+  $(document).ready(function () {
+    $(document).bind('keypress', function (e) {
+      if (e.keyCode == 13) {
+        $('#save_button').trigger('click');
+      }
+    });
+  })
+
+
+
+  function add_Emp_detail()
+   {
+debugger;
+    var Employee_Name  = $("#Employee_Name").val();
+    var destination    = $("#destination").val();
+    var yearly_package = $("#yearly_package").val();
+    var monthly_salary = $("#monthly_salary").val();
+    var Designation = $("#Designation").val();
+    var emp_id = $("#emp_id").val();
+
+    console.log(Employee_Name);
+    console.log(destination);
+    console.log(yearly_package);
+    console.log(monthly_salary);
+    console.log(Designation);
+
+    $.ajax({
+        method: "POST",
+        url: "/add_Emp_detail/",
+        data: {
+            Employee_Name: Employee_Name,  // Use the actual selected value
+            destination: destination,
+            yearly_package: yearly_package,
+            monthly_salary: monthly_salary,
+            Designation: Designation,
+            emp_id: emp_id,
+        },
+
+        success: function (response) {
+            if (response == "success") {
+                alert("Data stored");
+                location.href = '/Employee_Salary/';
+            } else {
+                alert("User already exists");
+            }
+        },
+
+        error: function (error) {
+            // Handle any errors that occur during the AJAX request
+            console.error(error);
+        }
+    });
+}
+
+  function modify_emp_detail() {
+    debugger;
+
+        var Employee_Name  = $("#Employee_Name").val();
+        var destination    = $("#destination").val();
+        var yearly_package = $("#yearly_package").val();
+        var monthly_salary = $("#monthly_salary").val();
+        var Designation = $("#Designation").val();
+        var emp_id = $("#emp_id").val();
+
+        console.log(Employee_Name);
+        console.log(destination);
+        console.log(yearly_package);
+        console.log(monthly_salary);
+        console.log(Designation);
+        console.log(emp_id);
+
+
+
+                    var form = $("#form_data")[0];
+                    var data_item = new FormData(form);
+                    data_item.append("Employee_Name", Employee_Name)
+                    data_item.append("destination", destination)
+                    data_item.append("yearly_package", yearly_package)
+                    data_item.append("monthly_salary", monthly_salary)
+                    data_item.append("Designation", Designation)
+                    data_item.append("emp_id", emp_id)
+
+
+                    $.ajax({
+                    method: "POST",
+                    url: "/modify_emp_detail/",
+                    enctype: "mutipart/form_data",
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    data: data_item,
+                    success: function (response) {
+
+                        if (response == "success") {
+
+                        alert("Data store")
+
+                        location.href = '/Employee_Salary/'
+
+                        }
+
+                        else {
+
+                        alert("User already requested")
+
+                        }
+
+
+                    }
+
+                    });
+
+                }
+
+
+function calculate_monthly_salary()
+{
+  var yearly_package =$("#yearly_package").val()
+  const new_package = parseFloat(yearly_package);
+  const monthly_salary = new_package/12;
+   $("#monthly_salary").val(monthly_salary.toFixed(2));
+}
+
+
+
+
+function Designation_select() {
+  debugger;
+  var Employee_Name = $("#Employee_Name").val();
+  $.ajax({
+    method: "POST",
+    url: "/Designation_select/",
+    data: {
+      "Employee_Name": Employee_Name
+    },
+    success: function (response) {
+      if (response['status'] == 1) {
+        $("#Designation").val(response.designation)
+      } 
+      else {
+        $("#Designation").val('')
+      }
+    },
+    error: function (error) {
+      console.error("AJAX error:", error);
+      alert("An error occurred while updating the designation");
+    }
+  });
+}
+
+</script>
+
+</html>
+{% include "layout/footer.html" %}
+

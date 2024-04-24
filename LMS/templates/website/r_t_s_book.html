@@ -1,0 +1,41 @@
+<table class="table table-hover" id="view_table">
+    <thead>
+      <tr>
+        <th class="text-center"> Id </th>
+
+        <th>Book</th> 
+        <th>Author</th>
+        <th>DOP</th>
+        <th>Condition</th>
+        <th>Price</th>
+        <th>Action</th>
+
+
+      </tr>
+    </thead>
+    <tbody>
+
+      {% for i in book_obj %}
+
+      <tr>
+        <th scope="row">{{i.id}}</th>
+        <td>{{i.Book}}</td>
+        <td>{{i.Author}}</td>
+        <td>{{i.DOP}}</td>
+        <td>{{i.Condition}}</td>
+        <td>{{i.Price}}</td>
+
+
+
+        <td>
+          <a class="btn btn-outline-primary" href="/edit_book_details/{{i.id}}"><i class=" fas fa fa-pencil"
+              aria-hidden="true"></i></a>
+          <a type="button" class="btn btn-outline-dark" onclick="delete_book('{{i.id}}')"><i
+              class=" fas fa-trash"></i></a>
+        </td>
+      </tr>
+
+      {% endfor %}
+
+    </tbody>
+  </table>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"
+      name="viewport"
+    />
+    <title>Library Management</title>
+    <!-- General CSS Files -->
+    <link rel="stylesheet" href="{% static 'assets/css/app.min.css' %}" />
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/bundles/bootstrap-social/bootstrap-social.css' %}"
+    />
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/css/components.css' %}" />
+    <!-- Custom style CSS -->
+    <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}" />
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="{% static 'assets/img/favicon.ico' %}"
+    />
+  </head>
+
+  <body style="background-color: #fdfcfc03">
+    <div class="loader"></div>
+    <div id="app">
+      <section class="section">
+        <div class="container mt-5">
+          <div class="row">
+            
+            <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2">
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h4>Sign-Up</h4>
+                </div>
+                <div class="card-body">
+                  <form
+                    method="POST"
+                    action="admindetail.html"
+                    class="needs-validation"
+                    novalidate=""
+                  >
+                    <div class="row">
+                        <div class="form-group col-6" >
+                            <input
+                            type="User_Name"
+                            id="User_Name"
+                            class="form-control"
+                            name="User_Name"
+                            tabindex="1"
+                            required
+                            autofocus
+                            User_Name   placeholder=" Enter User_Name"                 />
+
+                        </div>
+
+                       
+                          <div class="form-group col-6">
+                            <input
+                                type="text"
+                                id="Email"
+                                class="form-control"
+                                name="email"
+                                tabindex="1"
+                                required
+                                autofocus
+                                placeholder=" Enter email"/>
+                          </div>
+
+                    </div>    
+                 
+                
+
+                    <div class="row">
+                      <div class="form-group col-6" >
+                        <input
+                              type="PhoneNumber"
+                              id="PhoneNumber"
+                              class="form-control"
+                              name="PhoneNumber"
+                              tabindex="1"
+                              required
+                              autofocus
+                              PhoneNumber   placeholder=" Enter PhoneNumber"                  />
+
+                      </div>
+
+                      <div class="form-group col-6">
+                        <div class="d-block">
+                          <input
+                            id="Password"
+                            type="password"
+                            class="form-control"
+                            name="Password"
+                            tabindex="2"
+                            required
+                            placeholder=" Enter Password"/>
+
+                            
+                  </form>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block" onclick="signup()"> 
+                        signup
+                    </button>
+                </div>
+                <div class="mb-4 text-muted text-center">
+                    Already Registered? <a href="/login_page/">Login</a>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <!-- General JS Scripts -->
+    <script src="{% static 'assets/js/app.min.js'%}"></script>
+    <!-- JS Libraies -->
+    <script src="{% static 'assets/js/scripts.js'%}"></script>
+    <!-- Custom JS File -->
+    <script src="{% static 'assets/js/custom.js'%}"></script>
+  </body>
+</html>
+
+
+<script>
+  function signup()
+  {
+    var User_Name = $("#User_Name").val();
+    var Email = $("#Email").val();
+    var PhoneNumber =$("#PhoneNumber").val();
+    var Password = $("#Password").val();
+
+   
+    $.ajax({
+      method: 'POST',
+      url: '/signup/',
+      data: {
+        User_Name:User_Name,
+        Email: Email,
+        PhoneNumber:PhoneNumber,
+        Password:Password
+      },
+      success: function (response) {
+        if (response == 'success') {
+          location.href = '/login_page/'
+        }
+        else {
+          alert("error")
+
+        }
+      }
+
+    })
+  }
+
+ 
+ </script>
+

@@ -1,0 +1,295 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport" />
+  <title>User Data</title>
+  <!-- General CSS Files -->
+  <link rel="stylesheet" href="{% static 'assets/css/app.min.css' %}" />
+  <link rel="stylesheet" href="{% static 'assets/bundles/datatables/datatables.min.css' %}" />
+  <link rel="stylesheet"
+    href="{% static 'assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css' %}" />
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="{% static 'assets/css/style.css' %}" />
+  <link rel="stylesheet" href="{% static 'assets/css/components.css' %}" />
+  <!-- Custom style CSS -->
+  <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}" />
+  <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/img/favicon.ico' %}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+
+  <!-- <script src="https://unpkg.com/feather-icons"></script> -->
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+
+
+
+  <link href="{% static 'assets/select2.min.css' %}" rel="stylesheet" type="text/css" />
+  <script src="{% static 'assets/select2.min.js' %}"></script>
+
+  <script src="http://cdn.datatables.net/plug-ins/1.10.11/sorting/date-eu.js" type="text/javascript"></script>
+  <script type="text/javascript" charset="utf8"
+    src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-rc.1/css/select2.min.css" />
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-rc.1/js/select2.min.js"></script>
+
+<style>
+.main-content {
+    padding-left: 250px; /* Adjust the left-side padding */
+}
+.main-content {
+    padding-top: 70px; /* Adjust the top padding value as needed */
+}
+
+body {
+    padding: 20px; /* Adjust the padding value as needed */
+}
+
+.edit{
+    color: rgb(224, 50, 6);
+  }
+
+
+
+
+@media (max-width: 768px) {
+    .main-content {
+        padding: 10px; /* Adjust the padding value for smaller screens */
+    }
+}
+
+</style>
+
+<style>
+  /* Adjust padding */
+  .main-content {
+    padding-left: 250px;
+    padding-top: 70px;
+  }
+
+
+
+  body {
+    padding: 20px;
+    font-family: Arial, sans-serif; /* Change font family */
+  }
+
+  /* Improve navbar design */
+  .navbar {
+    background-color: #f8f9fa; /* Change background color */
+    border-bottom: 1px solid #dee2e6; /* Add border */
+  }
+
+  .navbar-nav .nav-link {
+    color: #343a40; /* Change text color */
+    font-weight: bold; /* Add bold font weight */
+  }
+
+  .navbar-brand {
+    font-size: 20px; /* Increase font size */
+  }
+
+  /* Improve sidebar design */
+  .sidebar-brand {
+    color: #030c16; /* Change text color */
+    font-weight: bold; /* Add bold font weight */
+  }
+
+  .sidebar-menu li a {
+    color: #6c757d; /* Change text color */
+  }
+
+  /* Add some spacing between elements */
+  .sidebar-brand,
+  .sidebar-menu {
+    margin-bottom: 20px;
+  }
+</style>
+
+<a href="/dashboard/" style="text-decoration: none;">
+  <span class="dashboard-icon"></span>
+  <span style="font-weight: bold;">Dashboard</span>
+</a>
+
+<style>
+  .dashboard-icon {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-monitor" style="margin-right: 10px;"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>');
+      background-size: cover;
+      margin-right: 10px;
+  }
+</style>
+
+
+
+
+
+
+<style>
+  /* Style for sidebar menu items */
+  .sidebar-menu li {
+      margin-bottom: 10px;
+  }
+
+  .sidebar-menu a {
+      color: #fff; /* Text color */
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+  }
+
+  .sidebar-menu a:hover {
+      background-color: #d7e9f1; /* Background color on hover */
+  }
+
+  .sidebar-menu a i {
+      margin-right: 10px;
+  }
+
+  .sidebar-menu span {
+      font-weight: bold;
+  }
+
+  /* Active menu item style */
+  .sidebar-menu .active a {
+      background-color: #c9dcee; /* Background color for active menu item */
+  }
+</style>
+
+
+</head>
+
+<body>
+  <div class="loader" id="loading"></div>
+  <div id="app">
+    <div class="main-wrapper main-wrapper-1">
+      <div class="navbar-bg"></div>
+      <nav class="navbar navbar-expand-lg main-navbar sticky">
+        <div class="form-inline mr-auto">
+          <div style="color: rgb(55, 13, 241);"  style="font-size: 18px">
+            <h5>login with: {{session_id}}</h5>
+          </div>
+        </div>
+
+        <ul class="navbar-nav mr-3">
+          <li>
+            <a href="#" data-toggle="sidebar" class="nav-link nav-link-lg collapse-btn">
+              <i data-feather="align-justify"></i></a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav navbar-right">
+          <li class="dropdown">
+          </li>
+
+          <li class="dropdown">
+            <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+              <button type="button" class="btn btn-warning btn-sm pull-right">
+                Logout
+              </button>
+              <span class="d-sm-none d-lg-inline-block"></span></a>
+            <div class="dropdown-menu dropdown-menu-right pullDown">
+              <div class="dropdown-title">Are you sure to logout ?</div>
+              <div class="dropdown-divider"></div>
+              <a href="/logout/" class="dropdown-item has-icon text-danger">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+              </a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+      <div class="main-sidebar sidebar-style-2">
+        <aside id="sidebar-wrapper">
+          <div class="sidebar-brand">
+            <span class="logo-name" style="font-size: 18px"><b>LIBRARY</b></span>
+          </div>
+
+          <ul class="sidebar-menu">
+            <li class="" id="dashboard_page">
+              <a href="/dashboard/"><i data-feather="monitor"></i><span>Dashboard</span></a>
+
+            </li>
+
+            <li class="" id="employee_view">
+              <a href="/employee_view/"><i data-feather="users"></i><span>Employee Master</span></a>
+            </li>
+
+            <!-- <li class="" id="book_master">
+              <a href="/book_master/"><i data-feather="home"></i><span>Book Master</span></a>
+            </li> -->
+
+
+            <li class="" id="book_master">
+              <a href="/book_master/">
+                  <i data-feather="book-open"></i><span>Book Master</span>
+              </a>
+            </li>
+                              
+
+            <!-- <li class="" id="issue_book">
+              <a href="/issue_book/"><i data-feather="copy"></i><span>Book Request</span></a>
+            </li> -->
+
+            <li class="" id="issue_book">
+              <a href="/issue_book/">
+                  <i data-feather="file-text"></i><span>Request Book</span>
+              </a>
+            </li>
+                    
+
+           
+            <li class="" id="daily_visitors">
+              <a href="/daily_visitors1/"><i data-feather="users"></i><span>Daily Visitors</span></a>
+            </li>
+
+            <li class="" id="Employee_Salary">
+              <a href="/Employee_Salary/"><i data-feather="users"></i><span>Employee Salary</span></a>
+            </li>  
+
+          </ul>
+      </div>
+    </div>
+  </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+    crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+
+    <script>
+      feather.replace();
+  </script>
+  
+</body>
+
+</html>

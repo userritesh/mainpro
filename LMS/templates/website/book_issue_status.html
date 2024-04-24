@@ -1,0 +1,423 @@
+<style>
+    .btn-group-vertical>.btn,
+    .btn-group>.btn {
+      position: relative;
+      -ms-flex: 1 1 auto;
+      -webkit-box-flex: 1;
+      flex: 1 1 auto;
+      width: 140px;
+      margin-bottom: -25px;
+    }
+  </style>
+  
+  {% load static %}
+
+  {% include "layout/header.html" %}
+    <!-- Main Content -->
+  <div class="main-content">
+    <section class="section">
+  
+      <div class="section-body">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <ul class="breadcrumb breadcrumb-style" style="margin-bottom: 0px;;">
+                      <li class="breadcrumb-item">
+                        <h4 class="page-title m-b-0">Book Details</h4>
+                      </li>
+                      <li class="breadcrumb-item">
+  
+  
+  
+  
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-md-6 pull-right" style="margin-top: 7px;">
+  
+                    <a href="/request_book/" class="btn btn-icon btn-primary pull-right"> New Request</a>
+                  </div>
+                </div>
+                <hr>
+                <br>
+  
+  
+                <div class="row">
+                  <div class="col-12">
+                    <div class="row">
+  
+  
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label>Start Date <span style="color:red">*</span>:</label>
+                          <div class="input-group">
+                            <input type="date" class="form-control" value="{{first_date|date:'Y-m-d'}}" id="first_date">
+                          </div>
+                        </div>
+                      </div>
+  
+  
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label>End Date <span style="color:red">*</span>:</label>
+                          <div class="input-group">
+                            <input type="date" class="form-control" value="{{last_date|date:'Y-m-d'}}" id="last_date">
+                          </div>
+                        </div>
+                      </div>
+  
+                      <div class="col-md-1">
+                        <div class="form-group">
+                          <div class="buttons">
+                            <a type="button" class="btn btn-primary btn-sm" style="margin-top: 45%;" onclick="date_book_search_filter()">search</a>
+                          </div>
+                        </div>
+                      </div> 
+                    </div>
+                  </div>
+                </div>
+  
+                <div id="table_div"> 
+                    <div class="table-responsive">
+
+                        <table class="table table-hover" id  = "view_table" >
+                          <thead>
+                            <tr>  
+                              
+                          <th> Sr No. </th>
+                          <th> Book Name</th>
+                          <th>Student Name</th>
+                          <th>Stu Class</th>
+                          <th>Section</th>
+                          <th>Email</th>
+                          <th>Issue Date</th>
+                          <th>Till Date</th>
+                          <th>Charge</th>
+                          <th>Condition</th>
+                          <th>Request_genrated_by</th>
+                          <th>img</th>
+                          <th>Request Status</th>
+                         <th>Action</th>
+                            
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                         
+                       {% for i in obj3 %}
+                 
+                       <tr>
+                              <th scope="row">{{i.id}}</th>
+                              <td>{{i.Book_Name.Book}}</td>
+                              <td>{{i.Student_Name}}</td>
+                              <td>{{i.Stu_Class}}</td>
+                              <td>{{i.Section}}</td>
+                              <td>{{i.Email}}</td>
+                              <td>{{i.Issue_Date}}</td>
+                              <td>{{i.Till_Date}}</td>
+                              <td>{{i.Charge|default:0}}</td>
+                              <td>{{i.Condition}}</td>
+                              <td>{{i.fk_employee.Employee_Name}}</td>
+                              <td><a href="{{i.img.url}}" target="_blank">{{i.img}}</a></td>
+                              <!-- |default:0                                 -->
+                          <style>
+                            .action-buttons {
+                                display: flex;
+                            }
+                        
+                            .action-buttons a {
+                                margin-right: 30px; /* Adjust the margin as needed */
+                            }
+                        </style>
+                        
+                        <td>
+                          <div class="action-buttons">
+                              <!-- {% if i.Request_Status == 'pending' %}
+                                  <a href="#" onclick="change_request('{{ i.id }}', 'Accept')" class="text-success"><strong>Accepted</strong></a>
+                                  <a href="#" onclick="change_request('{{ i.id }}', 'Reject')" class="text-danger"><strong>Rejected</strong></a>
+                              {% elif i.Request_Status == 'Accept' %}
+                                  <a href="#" onclick="change_request('{{ i.id }}', 'Reject')" class="text-danger"><strong>Rejected</strong></a>
+                              {% else %}
+                                  <a href="#" onclick="change_request('{{ i.id }}', 'Accept')" class="text-success"><strong>Accepted</strong></a>
+                              {% endif %} -->
+
+                              <div class="action-buttons">
+    {% if i.Request_Status == 'pending' %}
+        <a href="#" id="acceptLink{{ i.id }}" onclick="change_request('{{ i.id }}', 'Accept', this)" class="text-success"><strong>Accept</strong></a>
+        <a href="#" id="rejectLink{{ i.id }}" onclick="change_request('{{ i.id }}', 'Reject', this)" class="text-danger"><strong>Reject</strong></a>
+    {% elif i.Request_Status == 'Accept' %}
+        <span class="text-success"><strong>Accepted</strong></span>
+    {% else %}
+        <span class="text-danger"><strong>Rejected</strong></span>
+    {% endif %}
+</div>
+                          </div>
+                      </td>
+                      
+                           
+                            <td>
+                                <a  style="background-color: rgb(57, 57, 253);" class="btn btn-outline-primary" href = "/book_edit_request/{{i.id}}"><i style="color: rgb(247, 247, 252);" class=" fas fa fa-edit" aria-hidden="true" ></i></a>
+                                <a class="btn btn-outline-dark" onclick = "delete_book1('{{i.id}}')" ><i class=" fas fa-trash" ></i></a>
+                            </td>
+                        </tr>
+                
+                          {% endfor %}
+                
+                        </tbody>
+                        </table>
+             
+                      
+                      
+                    </div>
+                </div>
+
+  
+  
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+  </div>
+  </div>
+  
+  
+  
+  
+               <div class="form-group">
+                <label>DOJ<span style = "color:red">*</span>:</label>
+                         <div class="input-group">
+                           
+                 <div class="input-group-prepend">
+                             <div class="input-group-text">
+                               <i class="fas fa-home"></i>
+                             </div>
+                           </div>
+                <option value = "" selected hidden>Email</option>
+  -->
+  
+  {% for i in obj %}
+  <option value="{{i.id}}">}</option>
+  {% endfor %}
+  </select>
+  
+  
+  
+  
+  
+  <div class="modal fade" id="exampleModal_2" tabindex="-1" role="dialog" aria-labelledby="formModal" aria-hidden="true"
+    data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="formModal">Update Employee</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+  
+        <input type="hidden" id="employee_id">
+  
+        <div class="modal-body">
+  
+          <div class="form-group">
+            <label>Employee Name<span style="color:red">*</span>:</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <i class="fas fa-user"></i>
+                </div>
+              </div>
+              <input type="text" class="form-control"  placeholder="Employee Name" id="name_employee">
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label>Employee Code<span style="color:red">*</span>:</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <i class="fas fa-user"></i>
+                </div>
+              </div>
+              <input type="text" class="form-control" placeholder="Employee Code" id="code_employee">
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label>Store name<span style="color:red">*</span>:</label>
+            <div class="input-group">
+  
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <i class="fas fa-home"></i>
+                </div>
+              </div>
+  
+              <select name="cars" id="branch_name" class="form-control" option selected="selected">
+  
+                {% for i in obj %}
+                <option value="{{i.id}}">{{i.branch_name}}</option>
+                {% endfor %}
+  
+              </select>
+  
+            </div>
+          </div>
+    
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  </body>
+  
+  </html>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+  
+    
+     function date_book_search_filter() {
+       var first_date = $("#first_date").val()
+       var last_date = $("#last_date").val()
+
+      console.log(first_date)
+       console.log(last_date)
+
+       $.ajax({
+         method: "POST",
+         url: "/search/",
+         data: {
+          'first_date': first_date,
+         'last_date': last_date,  
+              },
+         success: function (response) {
+          $("#loading").hide();
+         console.log(response)
+          if (response['status'] == 1) {            
+            $('.containertable').html("")
+            $('.containertable').html(response.data)
+            $('#view_table').DataTable()
+            
+          }
+         else {
+            $('.containertable').html("")
+             $('.containertable').html(response.data)
+             $('#view_table').DataTable()
+  
+          }
+  
+  
+         }
+     });
+  
+    }
+  
+    $('#employee_report').attr("class", "active")
+    $("#reports").attr("class", "active")
+    $(document).ready(function () {
+  
+      $('#employee_table').DataTable({
+  
+        dom: 'lBfrtip',
+        buttons: [{
+          extend: 'excelHtml5',
+          text: 'Export to Excel',
+          title: 'example',
+        }
+        ]
+      });
+    });
+  
+  
+  
+    function delete_book1(id) {
+      console.log(id)
+      swal({
+        title: "Are you sure?",
+        text: "",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+        .then((willDelete) => {
+          if (willDelete) {
+            $.ajax({
+              method: "POST",
+              url: "/delete_book1/",
+              data: {
+                'id': id
+              },
+              success: function (response) {
+                if (response == "success") {
+                  swal("Book has been Deleted!", {
+                    icon: "success",
+                    button: "Ok",
+                    closeOnClickOutside: false,
+                  }).then(function () {
+                    location.reload();
+                  });
+                }
+              }
+            });
+          }
+        });
+    }
+  
+    $(document).ready(function () {
+      $('#employee_view').addClass("active");
+      $('#view_table').DataTable();
+    });
+  
+  
+    function change_request(id,Request_Status){
+      console.log(id)
+      console.log(Request_Status)
+      swal({
+        title: "Are you sure?",
+        text: "To Change Request Status",
+        icon: "info",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+          $.ajax({
+            method : "POST",
+            url : "/change_request_status/",
+            data : {
+              'id':id,
+              'Request_Status':Request_Status,
+              },
+            success : function(response){
+              if (response == "success"){
+                swal("To Change Request Status", {
+                icon: "success",
+                button: "Ok",
+                closeOnClickOutside: false,
+                }).then(function() {
+                  location.reload();
+                });
+              }
+            }
+          });
+        }
+      });
+    }
+    
+
+  
+  
+   
+   
+     </script>
+  
+  {% include "layout/footer.html" %}

@@ -1,0 +1,633 @@
+<style>
+    .btn-group-vertical>.btn,
+    .btn-group>.btn {
+      position: relative;
+      -ms-flex: 1 1 auto;
+      -webkit-box-flex: 1;
+      flex: 1 1 auto;
+      width: 140px;
+      margin-bottom: -25px;
+    }
+  </style>
+  
+  {% load static %}
+
+  {% include "layout/header.html" %}
+    <!-- Main Content -->
+  <div class="main-content">
+    <section class="section">
+  
+      <div class="section-body">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <ul class="breadcrumb breadcrumb-style" style="margin-bottom: 0px;;">
+                      <li class="breadcrumb-item">
+                        <h4 class="page-title m-b-0">Book Details</h4>
+                      </li>
+                      <li class="breadcrumb-item">
+  
+  
+  
+  
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-md-6 pull-right" style="margin-top: 7px;">
+  
+                    <a href="/daily_book_request/" class="btn btn-icon btn-primary pull-right"> New Request</a>
+                  </div>
+                </div>
+                <hr>
+                <br>
+  
+  
+                <div class="row">
+                  <div class="col-12">
+                    <div class="row">
+  
+  
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label>Start Date <span style="color:red">*</span>:</label>
+                          <div class="input-group">
+                            <input type="date" class="form-control" value="{{first_date|date:'Y-m-d'}}" id="first_date">
+                          </div>
+                        </div>
+                      </div>
+  
+  
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label>End Date <span style="color:red">*</span>:</label>
+                          <div class="input-group">
+                            <input type="date" class="form-control" value="{{last_date|date:'Y-m-d'}}" id="last_date">
+                          </div>
+                        </div>
+                      </div>
+  
+                      <div class="col-md-1">
+                        <div class="form-group">
+                          <div class="buttons">
+                            <a type="button" class="btn btn-primary btn-sm" style="margin-top: 45%;" onclick="date_book_search_filter()">search</a>
+                          </div>
+                        </div>
+                      </div> 
+                    </div>
+                  </div>
+                </div>
+  
+                <div id="table_div"> 
+                    <div class="table-responsive">
+
+                        <table class="table table-hover" id  = "view_table" >
+                          <thead>
+                            <tr>  
+                              
+                          <th> Sr No. </th>
+                          <th> Book Name</th>
+                          <th>Student Name</th>
+                          <th>Stu Class</th>
+                          <th>Section</th>
+                          <th>Email</th>
+                          <th>Issue Time</th>
+                          <th>Till Time</th>
+                          <th>Charge</th>
+                          <th>Condition</th>
+                          <th>Request_genrated_by</th>
+                          <th>Return_Book</th>
+                         <th>Action</th>
+                            
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                         
+                       {% for i in obj_daily %}
+                 
+                       <tr>
+                              <th scope="row">{{i.id}}</th>
+                              <td>{{i.Book_Name.Book}}</td>
+                              <td>{{i.Student_Name}}</td>
+                              <td>{{i.Stu_Class}}</td>
+                              <td>{{i.Section}}</td>
+                              <td>{{i.Email}}</td>
+                              <!-- <td>{{i.Issue_Time}}</td> -->
+                              <td id="issue_time_{{ i.id }}">{{ i.Issue_Time }}</td>
+
+                              <td>{{i.Till_Time}}</td>
+                              <td>{{i.Charge|default:0}}</td>
+                              <td>{{i.Condition}}</td>
+                              <td>{{i.fk_employee.Employee_Name}}</td>
+
+                                                                                            
+                          <style>
+                            .action-buttons {
+                                display: flex;
+                            }
+                        
+                            .action-buttons a {
+                                margin-right: 30px; /* Adjust the margin as needed */
+                            }
+                        </style>
+                        
+                        <td>
+                          <div class="action-buttons">
+
+                              <div class="action-buttons">
+
+                            <button type="button" class="btn btn-primary" onclick="showmodal('issue_time_{{ i.id }}','{{i.id}}')">
+                              Return Book
+                          </button>
+
+
+                            
+
+
+                        </div>
+                          </div>
+                      </td>
+                      
+                           
+                            <td>
+                                <a  style="background-color: blue;" class="btn btn-outline-primary" href = "/edit_daily_bookrequest/{{i.id}}"><i  style="color: aliceblue;" class=" fas fa fa-edit" aria-hidden="true" ></i></a>
+                                <a class="btn btn-outline-dark" onclick = "delete_book2('{{i.id}}')" ><i class=" fas fa-trash" ></i></a>
+                            </td>
+                        </tr>
+                
+                          {% endfor %}
+                
+                        </tbody>
+                        </table>
+             
+                      
+                      
+                    </div>
+                </div>
+
+  
+  
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+  </div>
+  </div>
+  
+  
+  
+  
+               <div class="form-group">
+                <label>DOJ<span style = "color:red">*</span>:</label>
+                         <div class="input-group">
+                           
+                 <div class="input-group-prepend">
+                             <div class="input-group-text">
+                               <i class="fas fa-home"></i>
+                             </div>
+                           </div>
+                <option value = "" selected hidden>Email</option>
+  -->
+  
+  {% for i in obj %}
+  <option value="{{i.id}}">}</option>
+  {% endfor %}
+  </select>
+  
+  
+  
+  
+  
+  <div class="modal fade" id="exampleModal_2" tabindex="-1" role="dialog" aria-labelledby="formModal" aria-hidden="true"
+    data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="formModal">Update Employee</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+  
+        <input type="hidden" id="employee_id">
+  
+        <div class="modal-body">
+  
+          <div class="form-group">
+            <label>Employee Name<span style="color:red">*</span>:</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <i class="fas fa-user"></i>
+                </div>
+              </div>
+              <input type="text" class="form-control"  placeholder="Employee Name" id="name_employee">
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label>Employee Code<span style="color:red">*</span>:</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <i class="fas fa-user"></i>
+                </div>
+              </div>
+              <input type="text" class="form-control" placeholder="Employee Code" id="code_employee">
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label>Store name<span style="color:red">*</span>:</label>
+            <div class="input-group">
+  
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <i class="fas fa-home"></i>
+                </div>
+              </div>
+  
+              <select name="cars" id="branch_name" class="form-control" option selected="selected">
+  
+                {% for i in obj %}
+                <option value="{{i.id}}">{{i.branch_name}}</option>
+                {% endfor %}
+  
+              </select>
+  
+            </div>
+          </div>
+    
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="Return_Book" tabindex="-1" role="dialog" aria-labelledby="formModal" aria-hidden="true"
+  data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content"> 
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title"> Return Book </h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>  
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <label for="modal_Issue_Time">Issue Time:</label>
+          <input type="time" id="modal_Issue_Time" class="form-control" name="trip-start" value="{{daily_obj.Issue_Time|time:'G:i:s'}}">
+
+          <label for="Till_Time">Till Time:</label>
+          <input type="time" id="Till_Time" class="form-control" name="trip-end">
+          <br> 
+
+          <label for="Charge">Charge:</label>
+          <input type="text" id="Charge" class="form-control" oninput="find_Amount()"  name="Charge"
+            tabindex="1" required autofocus placeholder="Charge"> <br>
+
+
+            <label for="Amount">Amount:</label>
+            <input type="text" id="Amount" class="form-control" name="Amount"
+              tabindex="1" required autofocus placeholder="Amount" disabled> <br>
+
+            <br>
+
+            <input type="hidden" id="daily_id" class="form-control"name="Price"
+            tabindex="1" required autofocus> <br> 
+
+
+  
+        </div>  
+        <!-- Modal Footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="close_modal()">Close</button>
+          <button type="button" class="btn btn-primary" onclick="saveAmountToServer()">Save changes</button>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  
+
+
+  <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+    <!-- Include jQuery and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+
+    <!-- Include Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    
+
+  </body>
+  
+  </html>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+
+    
+    function convertTo24HourFormat(timeString) {
+    // Parse the input time string
+    var timeComponents = timeString.match(/(\d+):(\d+) ([apAP]\.m\.)/);
+    if (!timeComponents) {
+        // If the input format is not as expected, return the original string
+        return timeString;
+    }
+    var hours = parseInt(timeComponents[1]);
+    var minutes = parseInt(timeComponents[2]);
+    var period = timeComponents[3].toUpperCase();
+    // Convert to 24-hour format
+    if (period === "P.M." && hours < 12) {
+        hours += 12;
+    } else if (period === "A.M." && hours === 12) {
+        hours = 0;
+    }
+    // Format the time to HH:MM:SS
+    var formattedTime = hours.toString().padStart(2, '0') + ":" + minutes.toString().padStart(2, '0') + ":00";
+    return formattedTime;
+}
+
+    function showmodal(time_id, objId) {
+      var issueTime = $('#' + time_id).text();
+      console.log('modal_Issue_Time:', issueTime, typeof issueTime);
+      $('#Return_Book').modal('show');
+      var tm = convertTo24HourFormat(issueTime)
+      console.log(tm)
+      $('#modal_Issue_Time').val(tm);
+      $('#daily_id').val(objId);
+}
+
+
+    function close_modal(){
+      $('#Return_Book').modal('hide')
+    }
+    
+     function date_book_search_filter() {
+       var first_date = $("#first_date").val()
+       var last_date = $("#last_date").val()
+
+      console.log(first_date)
+       console.log(last_date)
+
+       $.ajax({
+         method: "POST",
+         url: "/search/",
+         data: {
+          'first_date': first_date,
+         'last_date': last_date,  
+              },
+         success: function (response) {
+          $("#loading").hide();
+         console.log(response)
+          if (response['status'] == 1) {            
+            $('.containertable').html("")
+            $('.containertable').html(response.data)
+            $('#view_table').DataTable()
+            
+          }
+         else {
+            $('.containertable').html("")
+             $('.containertable').html(response.data)
+             $('#view_table').DataTable()
+  
+          }
+  
+  
+         }
+     });
+  
+    }
+  
+    $('#employee_report').attr("class", "active")
+    $("#reports").attr("class", "active")
+    $(document).ready(function () {
+  
+      $('#employee_table').DataTable({
+  
+        dom: 'lBfrtip',
+        buttons: [{
+          extend: 'excelHtml5',
+          text: 'Export to Excel',
+          title: 'example',
+        }
+        ]
+      });
+    });
+  
+  
+  
+    function delete_book2(id) {
+      console.log(id)
+      swal({
+        title: "Are you sure?",
+        text: "",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+        .then((willDelete) => {
+          if (willDelete) {
+            $.ajax({
+              method: "POST",
+              url: "/delete_book2/",
+              data: {
+                'id': id
+              },
+              success: function (response) {
+                if (response == "success") {
+                  swal("Book has been Deleted!", {
+                    icon: "success",
+                    button: "Ok",
+                    closeOnClickOutside: false,
+                  }).then(function () {
+                    location.reload();
+                  });
+                }
+              }
+            });
+          }
+        });
+    }
+  
+    $(document).ready(function () {
+      $('#employee_view').addClass("active");
+      $('#view_table').DataTable();
+    });
+  
+
+
+  
+    function change_request(id,Request_Status){
+      console.log(id)
+      console.log(Request_Status)
+      swal({
+        title: "Are you sure?",
+        text: "To Change Request Status",
+        icon: "info",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+          $.ajax({
+            method : "POST",
+            url : "/change_request_daily_book_status/",
+            data : {
+              'id':id,
+              'Request_Status':Request_Status,
+              },
+            success : function(response){
+              if (response == "success"){
+                swal("To Change Request Status", {
+                icon: "success",
+                button: "Ok",
+                closeOnClickOutside: false,
+                }).then(function() {
+                  location.reload();
+                });
+              }
+            }
+          });
+        }
+      });
+    }
+    
+
+
+
+function find_Amount() {
+    // debugger;
+
+    var Issue_Time = $('#modal_Issue_Time').val();  // Assuming '#Issue_Time' is the ID of the input for Issue_Time
+    var Till_Time = $('#Till_Time').val();    // Assuming '#Till_Time' is the ID of the input for Till_Time
+    var Charge = $('#Charge').val();          // Assuming '#Charge' is the ID of the input for Charge
+    var Amount = $('#Amount');                // Assuming '#Amount' is the ID of the input for Amount
+
+    // Parse the time strings into JavaScript Date objects
+    const issueTime = new Date("2024-03-01 " + Issue_Time);
+    const tillTime = new Date("2024-03-01 " + Till_Time);
+
+    // Calculate the time difference in milliseconds
+    const timeDiff = tillTime - issueTime;
+
+    // Convert the time difference to hours
+    const hours = timeDiff / (1000 * 60 * 60);
+
+    // Multiply the time difference by the charge rate
+    const amount = hours * Charge;
+
+    // Display the calculated amount in the Amount field
+    Amount.val(amount.toFixed(2));
+
+    return Amount;
+    saveAmountToServer(Amount);
+}
+
+    function saveAmountToServer(){
+      var modal_Issue_Time=$('#modal_Issue_Time').val()
+      var Till_Time=$('#Till_Time').val()
+      var Charge=$('#Charge').val()
+      var Amount=$('#Amount').val()
+      var daily_id=$("#daily_id").val()
+  
+  
+      if(modal_Issue_Time == ""){
+      
+        swal("Please Enter modal_Issue_Time", {
+          icon: "info",
+          button: "Ok",
+          closeOnClickOutside: false,     
+          }).then(function() {
+            
+        });
+      
+      }
+      
+      
+      else if(Till_Time == ""){
+      
+      swal("Please Enter Till_Time.", {
+          icon: "info",
+          button: "Ok",
+          closeOnClickOutside: false,     
+          }).then(function() {
+            
+        });
+      
+      }
+      
+      else if(Amount == ""){
+      
+      swal("Please Enter Amount.", {
+          icon: "info",
+          button: "Ok",
+          closeOnClickOutside: false,     
+          }).then(function() {
+            
+        });
+      
+      }
+      
+      
+      else{
+     
+      
+      console.log(modal_Issue_Time)
+      console.log(Till_Time)
+      console.log(Amount)
+      console.log(daily_id)
+      
+  
+   
+          
+          $.ajax({
+              method : "POST",
+              url : "/save_calculated_amount/",
+              data : {
+                'modal_Issue_Time':modal_Issue_Time,
+                'Till_Time':Till_Time,
+                'Amount':Amount,
+                'daily_id':daily_id,
+                  
+                 
+              
+              },
+              success : function(response){
+                 
+                  if (response == "success"){
+              
+                      alert("Data store")
+   
+                      location.href = '/daily_visitors1/'
+   
+                  }
+                  
+                  else{
+                  
+                      alert("User already exixts")
+                  
+                  }
+   
+              
+              }
+   
+      });
+   }
+  }
+  
+
+
+    </script>
+  
+   {% include "layout/footer.html" %}
